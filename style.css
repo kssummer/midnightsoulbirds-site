@@ -8,19 +8,18 @@ body {
 header {
   background: #1a1f3e;
   text-align: center;
-  padding: 2rem 1rem;
+  padding: 0;
+  height: 70vh;
+  overflow: hidden;
+  position: relative;
 }
 
-header h1 {
-  margin: 0;
-  font-size: 2.5rem;
-  letter-spacing: 1px;
-}
-
-header p {
-  margin-top: 0.5rem;
-  font-size: 1.2rem;
-  color: #aab;
+.banner-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  position: relative;
+  top: 0; /* adjust to shift image up if needed */
 }
 
 nav {
@@ -67,26 +66,6 @@ iframe {
   background: #000;
 }
 
-.photo-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1rem;
-}
-
-.photo-grid img {
-  width: 100%;
-  border-radius: 6px;
-  object-fit: cover;
-}
-
-.signup-form {
-  background: #1a1f3e;
-  padding: 1rem;
-  border-radius: 6px;
-  max-width: 400px;
-  margin: auto;
-}
-
 input[type="email"] {
   width: 100%;
   padding: 0.6rem;
@@ -117,3 +96,19 @@ footer {
   color: #777;
 }
 
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  font-size: 1.8rem;
+  color: #66caff;
+}
+
+.social-icons a {
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #53b0e0;
+}

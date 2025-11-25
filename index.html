@@ -5,109 +5,97 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Midnight Soulbirds</title>
   <link rel="stylesheet" href="style.css" />
+  
+  <!-- Font Awesome Free CDN -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512‑6nxGU5jVg5G9vNjG9qNLIm76dLIlnR+YqO/6gTF0xPS36SQD3h8sPyBHS0IcE/7NQr4xr10fuqN8dy69z3LRYQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
 </head>
 <body>
   <header>
-    <h1>Midnight Soulbirds</h1>
-    <p>Soul · Funk · Rock</p>
+    <img src="images/banner.jpg" alt="Midnight Soulbirds Banner" class="banner-image" />
   </header>
-
   <nav>
-    <a href="#live">Live Videos</a>
     <a href="#music">Music</a>
+    <a href="#live">Live Videos</a>
     <a href="#tour">Tour Dates</a>
     <a href="#about">About</a>
-    <a href="#photos">Photos</a>
     <a href="#connect">Connect</a>
-    <a href="#signup">Email List</a>
     <a href="#merch">Merch</a>
   </nav>
+
+  <section id="music">
+    <h2>Music</h2>
+    <div class="music-grid">
+      <iframe src="https://open.spotify.com/embed/album/4B1ww7dLBmKdvlyiqK0HdJ" allow="encrypted-media"></iframe>
+    </div>
+  </section>
 
   <section id="live">
     <h2>Live Videos</h2>
     <div class="video-grid">
-      <!-- Replace with your actual YouTube embed IDs -->
-      <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" allowfullscreen></iframe>
-    </div>
-  </section>
-
-  <section id="music">
-    <h2>Published Music</h2>
-    <div class="music-grid">
-      <!-- Example Spotify embed – replace with your actual album / track IDs -->
-      <iframe src="https://open.spotify.com/embed/album/ALBUM_ID" allow="encrypted-media"></iframe>
-      <iframe src="https://open.spotify.com/embed/track/TRACK_ID" allow="encrypted-media"></iframe>
+      <iframe
+        src="https://www.youtube.com/embed/y-6RQshp2zo"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+      <iframe
+        src="https://www.youtube.com/embed/H0IEXloNVAM"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
     </div>
   </section>
 
   <section id="tour">
     <h2>Tour Dates</h2>
-    <p>No upcoming shows — stay tuned!</p>
-    <!-- You can embed a Bandsintown widget or a Google Calendar here -->
+    <div id="tour-dates-list">
+      <ul>
+        <li>Dec 11, 2025 - Globe Hall, Denver, CO</li>
+        <li>Jan 2, 2026 - Santa Fe Arts, Denver, CO</li>
+        <li>Feb 7, 2026 - Magic Rat, Fort Collins, CO</li>
+      </ul>
+    </div>
   </section>
 
   <section id="about">
     <h2>About</h2>
     <p>
-      The Midnight Soulbirds are a soul-funk-rock band blending timeless grooves with
-      emotive vocals. Based in [Your City], we draw inspiration from classic soul, modern
-      funk, and vintage rock to create a sound that’s both nostalgic and fresh.
+      The Midnight Soulbirds are a soul-funk-rock band blending timeless grooves with emotive vocals. Based in Denver, we draw inspiration from classic soul, modern funk, and vintage rock to create a sound that’s both nostalgic and fresh.
     </p>
-  </section>
-
-  <section id="photos">
-    <h2>Photos</h2>
-    <div class="photo-grid">
-      <img src="images/photo1.jpg" alt="Midnight Soulbirds photo 1" />
-      <img src="images/photo2.jpg" alt="Midnight Soulbirds photo 2" />
-      <img src="images/photo3.jpg" alt="Midnight Soulbirds photo 3" />
-      <img src="images/photo4.jpg" alt="Midnight Soulbirds photo 4" />
-    </div>
   </section>
 
   <section id="connect">
     <h2>Connect with Us</h2>
     <div class="social-icons">
-      <a href="https://linktr.ee/midnight.soulbirds" target="_blank" aria-label="Linktree">
-        <!-- Simple Linktree icon using SVG -->
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="#0af" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM8 12a4 4 0 1 1 4 4 4 4 0 0 1-4-4zm8 6c-1.33 0-2.61-.53-3.54-1.46L11 16l.95-.95a5.984 5.984 0 0 0 1.49-.63L13 15l1.46 1.46A4.96 4.96 0 0 1 16 18z"/>
-        </svg>
+      <a href="https://open.spotify.com/artist/3vnHJyr4rUk3H0Q0yRzh18" target="_blank" aria-label="Spotify">
+        <i class="fab fa-spotify"></i>
       </a>
-      <!-- Add more icons / links to other social profiles here -->
-    </div>
-
-    <div class="video-grid" style="margin-top: 1.5rem;">
-      <!-- Featured social / Linktree videos -->
-      <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" allowfullscreen></iframe>
-    </div>
-
-    <div class="photo-grid" style="margin-top: 1.5rem;">
-      <img src="images/photo1.jpg" alt="Band Photo 1" />
-      <img src="images/photo2.jpg" alt="Band Photo 2" />
-      <img src="images/photo3.jpg" alt="Band Photo 3" />
-    </div>
-  </section>
-
-  <section id="signup">
-    <h2>Join Our Email List</h2>
-    <div class="signup-form">
-      <form action="#" method="post">
-        <label for="email">Email Address:</label><br />
-        <input type="email" id="email" name="email" placeholder="you@example.com" required /><br />
-        <input type="submit" value="Sign Up" />
-      </form>
+      <a href="https://www.instagram.com/midnight.soulbirds" target="_blank" aria-label="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://www.tiktok.com/@midnight.soulbirds" target="_blank" aria-label="TikTok">
+        <i class="fab fa-tiktok"></i>
+      </a>
+      <a href="https://www.youtube.com/@Midnight.Soulbirds" target="_blank" aria-label="YouTube">
+        <i class="fab fa-youtube"></i>
+      </a>
+      <a href="https://www.facebook.com/midnight.soulbirds" target="_blank" aria-label="Facebook">
+        <i class="fab fa-facebook"></i>
+      </a>
+      <a href="https://music.apple.com/us/artist/the-midnight-soulbirds/1850133553" target="_blank" aria-label="Apple Music">
+        <i class="fab fa-apple"></i>
+      </a>
     </div>
   </section>
 
   <section id="merch">
     <h2>Merch</h2>
-    <p>
-      Check out our merch store at
-      <a href="https://your-merch-link.com" target="_blank">our merch shop →</a>
-    </p>
+    <p>Coming Soon!!</p>
   </section>
 
   <footer>
@@ -115,4 +103,3 @@
   </footer>
 </body>
 </html>
-
