@@ -8,34 +8,42 @@ body {
 html, body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
+  width: 100%;
+  overflow-x: hidden; /* just in case */
 }
 
 header {
   position: relative;
-  width: 100vw;
-  height: 700px;      /* Fixed desktop height */
-  overflow: hidden;   /* Hide overflow vertically */
+  width: 100%;
+  height: 700px;
   background: #1a1f3e;
+  overflow: hidden;
+  margin: 0;
   padding: 0;
 }
 
-.banner-image {
-  width: 100%;        /* Full width of container */
-  height: auto;       /* Keep natural aspect ratio */
-  display: block;
-  object-fit: none;   /* Disable cropping/scaling */
-  object-position: top;
+.banner-wrapper {
+  position: relative;      /* establish positioning context for absolute image */
+  width: 100%;
+  height: 100%;           /* fill header height */
+  overflow: hidden;       /* crop bottom if image is taller */
 }
 
-/* MOBILE FIX */
+.banner-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;       /* fill full header height */
+  object-fit: cover;  /* scale and crop to cover container */
+  object-position: top; /* align cropping from top */
+  user-select: none;
+}
+
+/* Mobile adjustments */
 @media (max-width: 768px) {
   header {
-    height: 350px;    /* Smaller height on mobile */
-  }
-  .banner-image {
-    width: 100%;
-    height: auto;
+    height: 350px;        /* smaller header height */
   }
 }
 
