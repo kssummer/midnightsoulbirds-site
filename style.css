@@ -15,17 +15,22 @@ header {
 }
 
 .banner-image {
-  width: 100%;
-  height: 100%;
+  width: 100vw;       /* Viewport width: always full screen width */
+  height: 700px;      /* Match header height */
   object-fit: cover;
   object-position: top;
   display: block;
+  max-width: 100%;
 }
 
 /* MOBILE FIX */
 @media (max-width: 768px) {
   header {
-    height: 350px; /* Adjust until it fits nicely on your phone */
+    height: 350px;
+  }
+  .banner-image {
+    height: 350px;     /* Match header height on mobile */
+    width: 100vw;      /* Full viewport width */
   }
 }
 
