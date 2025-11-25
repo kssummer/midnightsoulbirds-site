@@ -9,17 +9,17 @@ header {
   background: #1a1f3e;
   text-align: center;
   padding: 0;
-  height: 70vh;
   overflow: hidden;
   position: relative;
+  height: 700px; /* adjust until 30% is removed */
 }
 
 .banner-image {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  object-position: top; /* top anchors so bottom gets cropped */
   display: block;
-  position: relative;
-  top: 0; /* adjust to shift image up if needed */
 }
 
 nav {
@@ -111,4 +111,20 @@ footer {
 
 .social-icons a:hover {
   color: #53b0e0;
+}
+
+#connect .email-link {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+#connect .email-link a {
+  color: #66caff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#connect .email-link a:hover {
+  text-decoration: underline;
 }
