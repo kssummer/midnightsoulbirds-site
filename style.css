@@ -6,31 +6,26 @@ body {
 }
 
 header {
-  background: #1a1f3e;
-  text-align: center;
-  padding: 0;
+  width: 100vw;  /* full viewport width */
   overflow: hidden;
   position: relative;
-  height: 700px; /* Desktop */
+  height: 700px; /* or responsive height */
 }
 
 .banner-image {
-  width: 100vw;       /* Viewport width: always full screen width */
-  height: 700px;      /* Match header height */
+  width: 100vw;  /* force full viewport width */
+  height: 700px; /* match header height */
   object-fit: cover;
   object-position: top;
   display: block;
-  max-width: 100%;
 }
 
-/* MOBILE FIX */
 @media (max-width: 768px) {
   header {
     height: 350px;
   }
   .banner-image {
-    height: 350px;     /* Match header height on mobile */
-    width: 100vw;      /* Full viewport width */
+    height: 350px;
   }
 }
 
