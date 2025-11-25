@@ -5,35 +5,37 @@ body {
   color: #eee;
 }
 
-header {
-  background: #1a1f3e;
-  text-align: center;
+html, body {
+  margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow-x: hidden;
+}
+
+header {
   position: relative;
-  height: 700px; /* Desktop height */
-  width: 100vw;   /* Full viewport width */
+  width: 100vw;
+  height: 700px;      /* Fixed desktop height */
+  overflow: hidden;   /* Hide overflow vertically */
+  background: #1a1f3e;
+  padding: 0;
 }
 
 .banner-image {
-  width: 100vw;     /* Full viewport width */
-  height: auto;     /* Let height scale naturally */
-  max-height: 700px; /* Limit max height to header height */
-  object-fit: none; /* Disable object-fit cropping */
-  object-position: top; 
+  width: 100%;        /* Full width of container */
+  height: auto;       /* Keep natural aspect ratio */
   display: block;
+  object-fit: none;   /* Disable cropping/scaling */
+  object-position: top;
 }
 
 /* MOBILE FIX */
 @media (max-width: 768px) {
   header {
-    height: 350px; /* Smaller header height on mobile */
+    height: 350px;    /* Smaller height on mobile */
   }
   .banner-image {
-    max-height: 350px; /* Limit image height */
-    width: 100vw;      /* Always full width */
-    height: auto;      /* Natural height scaling */
-    object-fit: none;  /* Prevent cropping */
+    width: 100%;
+    height: auto;
   }
 }
 
