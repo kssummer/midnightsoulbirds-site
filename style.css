@@ -6,26 +6,34 @@ body {
 }
 
 header {
-  width: 100vw;  /* full viewport width */
+  background: #1a1f3e;
+  text-align: center;
+  padding: 0;
   overflow: hidden;
   position: relative;
-  height: 700px; /* or responsive height */
+  height: 700px; /* Desktop height */
+  width: 100vw;   /* Full viewport width */
 }
 
 .banner-image {
-  width: 100vw;  /* force full viewport width */
-  height: 700px; /* match header height */
-  object-fit: cover;
-  object-position: top;
+  width: 100vw;     /* Full viewport width */
+  height: auto;     /* Let height scale naturally */
+  max-height: 700px; /* Limit max height to header height */
+  object-fit: none; /* Disable object-fit cropping */
+  object-position: top; 
   display: block;
 }
 
+/* MOBILE FIX */
 @media (max-width: 768px) {
   header {
-    height: 350px;
+    height: 350px; /* Smaller header height on mobile */
   }
   .banner-image {
-    height: 350px;
+    max-height: 350px; /* Limit image height */
+    width: 100vw;      /* Always full width */
+    height: auto;      /* Natural height scaling */
+    object-fit: none;  /* Prevent cropping */
   }
 }
 
