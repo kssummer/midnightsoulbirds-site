@@ -77,6 +77,99 @@ h2 {
   color: #a0d8ff;
 }
 
+/* ===== TOUR DATES ===== */
+
+#tour {
+  margin-top: 3rem;
+}
+
+#tour-dates-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+#tour-dates-list li {
+  /* layout */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+
+  /* card appearance */
+  background: linear-gradient(145deg, #12163a, #0b0d1d);
+  border: 1px solid #2a2f55;
+  border-radius: 10px;
+  padding: 1.2rem 1.5rem;
+  font-size: 1.1rem;
+
+  /* depth */
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 1px rgba(102, 202, 255, 0.05);
+
+  /* interaction */
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.show-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.show-action {
+  flex-shrink: 0;
+}
+
+#tour-dates-list li:hover {
+  transform: translateY(-2px);
+  border-color: #66caff;
+  box-shadow:
+    0 6px 20px rgba(102, 202, 255, 0.25),
+    inset 0 0 0 1px rgba(102, 202, 255, 0.15);
+}
+
+/* Optional structure inside each li */
+#tour-dates-list .date {
+  font-weight: bold;
+  color: #66caff;
+  white-space: nowrap;
+}
+
+#tour-dates-list .venue {
+  color: #eee;
+}
+
+/* Ticket button */
+
+.ticket-button {
+  background: #66caff;
+  color: #000;
+  font-weight: bold;
+  padding: 0.45rem 0.9rem;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.ticket-button:hover {
+  background: #53b0e0;
+  transform: scale(1.05);
+}
+
+/* Mobile: stack date over venue */
+@media (max-width: 600px) {
+  #tour-dates-list li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 .video-grid,
 .music-grid {
   display: grid;
