@@ -1,16 +1,24 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0b0d1d;
-  color: #eee;
+/* ============================= */
+/* GLOBAL RESET + BASE STYLES   */
+/* ============================= */
+
+* {
+  box-sizing: border-box;
 }
 
 html, body {
   margin: 0;
   padding: 0;
   width: 100%;
-  overflow-x: hidden; /* just in case */
+  overflow-x: hidden;
+  font-family: Arial, sans-serif;
+  background: #0b0d1d;
+  color: #eee;
 }
+
+/* ============================= */
+/* HEADER + BANNER              */
+/* ============================= */
 
 header {
   position: relative;
@@ -18,34 +26,34 @@ header {
   height: 700px;
   background: #1a1f3e;
   overflow: hidden;
-  margin: 0;
-  padding: 0;
 }
 
 .banner-wrapper {
-  position: relative;      /* establish positioning context for absolute image */
+  position: relative;
   width: 100%;
-  height: 100%;           /* fill header height */
-  overflow: hidden;       /* crop bottom if image is taller */
+  height: 100%;
+  overflow: hidden;
 }
 
 .banner-image {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
-  height: 100%;       /* fill full header height */
-  object-fit: cover;  /* scale and crop to cover container */
-  object-position: top; /* align cropping from top */
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
   user-select: none;
 }
 
-/* Mobile adjustments */
 @media (max-width: 768px) {
   header {
-    height: 225px;        /* smaller header height */
+    height: 225px;
   }
 }
+
+/* ============================= */
+/* NAVIGATION                   */
+/* ============================= */
 
 nav {
   background: #0a0c21;
@@ -64,6 +72,10 @@ nav a:hover {
   text-decoration: underline;
 }
 
+/* ============================= */
+/* SECTIONS                     */
+/* ============================= */
+
 section {
   padding: 2rem 1rem;
   max-width: 900px;
@@ -77,7 +89,76 @@ h2 {
   color: #a0d8ff;
 }
 
-/* ===== TOUR DATES ===== */
+/* ============================= */
+/* GRID LAYOUTS                 */
+/* ============================= */
+
+.music-grid,
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+/* Force vertical stacking on desktop */
+@media (min-width: 768px) {
+  .music-grid,
+  .video-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* ============================= */
+/* IFRAME EMBEDS (Scoped Only)  */
+/* ============================= */
+
+iframe {
+  width: 100%;
+  border: none;
+  display: block;
+  background: transparent;
+}
+
+.video-grid iframe {
+  aspect-ratio: 16 / 9;
+  min-height: 200px;
+}
+
+/* ============================= */
+/* SPOTIFY CARD                 */
+/* ============================= */
+
+.spotify-card {
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #2a2f55;
+  background: linear-gradient(145deg, #12163a, #0b0d1d);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  width: 100%;
+  margin: 0.5rem 0;
+}
+
+.spotify-card .spotify-embed + .spotify-embed {
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.spotify-card iframe {
+  height: 280px;
+}
+
+@media (max-width: 600px) {
+  .spotify-card iframe {
+    height: 220px;
+  }
+}
+
+/* ============================= */
+/* TOUR DATES                   */
+/* ============================= */
 
 #tour {
   margin-top: 3rem;
@@ -92,36 +173,24 @@ h2 {
 }
 
 #tour-dates-list li {
-  /* layout */
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1.5rem;
 
-  /* card appearance */
   background: linear-gradient(145deg, #12163a, #0b0d1d);
   border: 1px solid #2a2f55;
   border-radius: 10px;
   padding: 1.2rem 1.5rem;
   font-size: 1.1rem;
 
-  /* depth */
   box-shadow:
     0 4px 12px rgba(0, 0, 0, 0.4),
     inset 0 0 0 1px rgba(102, 202, 255, 0.05);
 
-  /* interaction */
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-}
-
-.show-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.show-action {
-  flex-shrink: 0;
+  transition: transform 0.25s ease,
+              box-shadow 0.25s ease,
+              border-color 0.25s ease;
 }
 
 #tour-dates-list li:hover {
@@ -132,27 +201,21 @@ h2 {
     inset 0 0 0 1px rgba(102, 202, 255, 0.15);
 }
 
-/* Make clickable tour date entries visually distinct */
-.clickable-show {
-  transition: background 0.2s, box-shadow 0.2s;
-}
-.clickable-show:hover {
-  background: #18204a;
-  box-shadow: 0 2px 12px rgba(102,202,255,0.10);
+.show-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
-/* Optional structure inside each li */
-#tour-dates-list .date {
+.date {
   font-weight: bold;
   color: #66caff;
   white-space: nowrap;
 }
 
-#tour-dates-list .venue {
+.venue {
   color: #eee;
 }
-
-/* Ticket button */
 
 .ticket-button {
   background: #66caff;
@@ -163,7 +226,8 @@ h2 {
   text-decoration: none;
   font-size: 0.9rem;
   white-space: nowrap;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition: background 0.2s ease,
+              transform 0.2s ease;
 }
 
 .ticket-button:hover {
@@ -171,7 +235,11 @@ h2 {
   transform: scale(1.05);
 }
 
-/* Mobile: stack date over venue */
+.past-show {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+
 @media (max-width: 600px) {
   #tour-dates-list li {
     flex-direction: column;
@@ -179,56 +247,9 @@ h2 {
   }
 }
 
-.video-grid,
-.music-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1rem;
-}
-
-
-iframe {
-  width: 100%;
-  border: none;
-  background: transparent;
-}
-
-.video-grid iframe {
-  aspect-ratio: 16 / 9;
-  height: auto;
-  width: 100%;
-  min-height: 200px;
-}
-
-input[type="email"] {
-  width: 100%;
-  padding: 0.6rem;
-  border: none;
-  border-radius: 4px;
-  margin-top: 0.5rem;
-}
-
-input[type="submit"] {
-  margin-top: 1rem;
-  padding: 0.7rem 1.2rem;
-  border: none;
-  background: #66caff;
-  color: #000;
-  font-weight: bold;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-input[type="submit"]:hover {
-  background: #53b0e0;
-}
-
-footer {
-  text-align: center;
-  padding: 2rem 1rem;
-  background: #0a0c21;
-  color: #777;
-}
+/* ============================= */
+/* SOCIAL ICONS                 */
+/* ============================= */
 
 .social-icons {
   display: flex;
@@ -239,13 +260,27 @@ footer {
 }
 
 .social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: inherit;
   transition: color 0.3s ease;
+  text-decoration: none;
 }
 
 .social-icons a:hover {
   color: #53b0e0;
 }
+
+.social-icons i {
+  width: 1.2em;
+  text-align: center;
+  line-height: 1;
+}
+
+/* ============================= */
+/* EMAIL LINK                   */
+/* ============================= */
 
 #connect .email-link {
   margin-top: 1rem;
@@ -263,128 +298,13 @@ footer {
   text-decoration: underline;
 }
 
-/* Stack Spotify links and YouTube videos vertically on desktop */
-@media (min-width: 768px) {
-  /* Override grid layouts and force vertical stacking */
-  .music-grid,
-  .video-grid,
-  .videos,
-  .youtube-row,
-  .spotify-row,
-  .spotify-container {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 1rem !important;
-    align-items: stretch !important;
-  }
-}
+/* ============================= */
+/* FOOTER                       */
+/* ============================= */
 
-/* Ensure embeds and external links expand to container width */
-a[href*="spotify"],
-iframe[src*="spotify"],
-iframe[src*="youtube"],
-.youtube-embed,
-iframe.youtube {
-  width: 100% !important;
-  max-width: 100% !important;
-  display: block !important;
-  height: auto !important;
-}
-
-
-/* Spotify card: make multiple embeds look like a single, unified element, no extra gap */
-.spotify-card {
-  border-radius: 12px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid #2a2f55;
-  background: linear-gradient(145deg, #12163a, #0b0d1d);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
-  gap: 0;
-  width: 100%;
-  margin: 0.5rem 0;
-  transform-origin: top center;
-}
-
-
-.spotify-card .spotify-embed {
-  margin: 0;
-  padding: 0;
-  position: relative;
-  height: auto;
-  overflow: visible;
-}
-
-
-.spotify-card .spotify-embed + .spotify-embed {
-  margin-top: 0;
-  border-top: 1px solid rgba(255,255,255,0.03);
-}
-
-
-
-
-.spotify-card .spotify-embed iframe {
-  position: static;
-  width: 100% !important;
-  height: 280px !important;
-  border-radius: 0 !important;
-  display: block;
-}
-
-
-@media (max-width: 600px) {
-  .spotify-card .spotify-embed iframe {
-    height: 220px !important;
-  }
-}
-
-/* Scale-down vertically only: keep full width, reduce iframe heights */
-.spotify-card {
-  width: 100%;
-  margin: 0.5rem 0;
-  transform-origin: top center;
-}
-
-.spotify-card .spotify-embed iframe {
-  height: 280px !important;
-}
-
-@media (max-width: 600px) {
-  .spotify-card .spotify-embed iframe { height: 220px !important; }
-}
-
-/* Stack Spotify links and YouTube videos vertically on desktop */
-@media (min-width: 768px) {
-  /* Override grid layouts and force vertical stacking */
-  .music-grid,
-  .video-grid,
-  .videos,
-  .youtube-row,
-  .spotify-row,
-  .spotify-container {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 1rem !important;
-    align-items: stretch !important;
-  }
-}
-
-/* Ensure embeds and external links expand to container width */
-a[href*="spotify"],
-iframe[src*="spotify"],
-iframe[src*="youtube"],
-.youtube-embed,
-iframe.youtube {
-  width: 100% !important;
-  max-width: 100% !important;
-  display: block !important;
-  height: auto !important;
-}
-
-/* Cross out past tour dates */
-.past-show {
-  opacity: 0.5;
-  text-decoration: line-through;
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: #0a0c21;
+  color: #777;
 }
