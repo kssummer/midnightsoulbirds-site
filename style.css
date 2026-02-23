@@ -132,6 +132,15 @@ h2 {
     inset 0 0 0 1px rgba(102, 202, 255, 0.15);
 }
 
+/* Make clickable tour date entries visually distinct */
+.clickable-show {
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.clickable-show:hover {
+  background: #18204a;
+  box-shadow: 0 2px 12px rgba(102,202,255,0.10);
+}
+
 /* Optional structure inside each li */
 #tour-dates-list .date {
   font-weight: bold;
@@ -372,4 +381,10 @@ iframe.youtube {
   max-width: 100% !important;
   display: block !important;
   height: auto !important;
+}
+
+/* Cross out past tour dates */
+.past-show {
+  opacity: 0.5;
+  text-decoration: line-through;
 }
