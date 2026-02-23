@@ -177,11 +177,15 @@ h2 {
   gap: 1rem;
 }
 
+
 iframe {
   width: 100%;
-  height: 200px;
   border: none;
-  background: #000;
+  background: transparent;
+}
+
+.video-grid iframe {
+  height: 352px;
 }
 
 input[type="email"] {
@@ -245,4 +249,124 @@ footer {
 
 #connect .email-link a:hover {
   text-decoration: underline;
+}
+
+/* Stack Spotify links and YouTube videos vertically on desktop */
+@media (min-width: 768px) {
+  /* Override grid layouts and force vertical stacking */
+  .music-grid,
+  .video-grid,
+  .videos,
+  .youtube-row,
+  .spotify-row,
+  .spotify-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+    align-items: stretch !important;
+  }
+}
+
+/* Ensure embeds and external links expand to container width */
+a[href*="spotify"],
+iframe[src*="spotify"],
+iframe[src*="youtube"],
+.youtube-embed,
+iframe.youtube {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block !important;
+  height: auto !important;
+}
+
+
+/* Spotify card: make multiple embeds look like a single, unified element, no extra gap */
+.spotify-card {
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #2a2f55;
+  background: linear-gradient(145deg, #12163a, #0b0d1d);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  gap: 0;
+  width: 100%;
+  margin: 0.5rem 0;
+  transform-origin: top center;
+}
+
+
+.spotify-card .spotify-embed {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  height: auto;
+  overflow: visible;
+}
+
+
+.spotify-card .spotify-embed + .spotify-embed {
+  margin-top: 0;
+  border-top: 1px solid rgba(255,255,255,0.03);
+}
+
+
+
+
+.spotify-card .spotify-embed iframe {
+  position: static;
+  width: 100% !important;
+  height: 280px !important;
+  border-radius: 0 !important;
+  display: block;
+}
+
+
+@media (max-width: 600px) {
+  .spotify-card .spotify-embed iframe {
+    height: 220px !important;
+  }
+}
+
+/* Scale-down vertically only: keep full width, reduce iframe heights */
+.spotify-card {
+  width: 100%;
+  margin: 0.5rem 0;
+  transform-origin: top center;
+}
+
+.spotify-card .spotify-embed iframe {
+  height: 280px !important;
+}
+
+@media (max-width: 600px) {
+  .spotify-card .spotify-embed iframe { height: 220px !important; }
+}
+
+/* Stack Spotify links and YouTube videos vertically on desktop */
+@media (min-width: 768px) {
+  /* Override grid layouts and force vertical stacking */
+  .music-grid,
+  .video-grid,
+  .videos,
+  .youtube-row,
+  .spotify-row,
+  .spotify-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+    align-items: stretch !important;
+  }
+}
+
+/* Ensure embeds and external links expand to container width */
+a[href*="spotify"],
+iframe[src*="spotify"],
+iframe[src*="youtube"],
+.youtube-embed,
+iframe.youtube {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block !important;
+  height: auto !important;
 }
