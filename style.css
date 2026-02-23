@@ -185,7 +185,10 @@ iframe {
 }
 
 .video-grid iframe {
-  height: 352px;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  width: 100%;
+  min-height: 200px;
 }
 
 input[type="email"] {
