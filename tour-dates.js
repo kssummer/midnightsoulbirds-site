@@ -2,7 +2,7 @@
 // Requires PapaParse (CDN) or similar CSV parser
 
 document.addEventListener('DOMContentLoaded', function() {
-  const csvUrl = 'tour-dates.csv';
+  const csvUrl = `tour-dates.csv?v=${Date.now()}`;
   const tourList = document.querySelector('#tour-dates-list ul');
   if (!tourList) return;
 
