@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Midnight Soulbirds</title>
-  <link rel="stylesheet" href="style.css?v=21">
+  <link rel="stylesheet" href="style.css?v=23">
 
   <!-- PapaParse for CSV parsing -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
@@ -195,94 +195,81 @@
   <h2>Merch</h2>
 
   <div class="merch-grid">
-
-    <!-- Edor Shirt -->
     <article class="merch-card">
-      <div class="merch-image-wrap">
-        <img
-          src="images/merch/MSB_Edor_Shirt.jpg"
-          alt="Midnight Soulbirds Edor T-shirt"
-          class="merch-image"
-        />
-      </div>
-
-      <div class="merch-info">
-        <h3>Psychedelic Tee</h3>
-        <p class="merch-price">$30</p>
-
-        <p class="merch-description">
-          Midnight Soulbirds psychedelic Soulbird tee.
-        </p>
-
-        <a class="merch-button" href="#">
-          Shop Tee
-        </a>
-      </div>
-    </article>
-
-
-    <!-- Moon Shirt -->
-    <article class="merch-card">
-      <div class="merch-image-wrap">
-        <img
-          src="images/merch/MSB_Moon_Shirt.png"
-          alt="Midnight Soulbirds Moon T-shirt"
-          class="merch-image"
-        />
-      </div>
-
-      <div class="merch-info">
-        <h3>Moon Tee</h3>
-        <p class="merch-price">$30</p>
-
-        <p class="merch-description">
-          Midnight Soulbirds moon logo tee.
-        </p>
-
-        <a class="merch-button" href="#">
-          Shop Tee
-        </a>
-      </div>
-    </article>
-
-
-    <!-- Headband -->
-    <article class="merch-card">
-      <div class="merch-image-wrap merch-headband-image">
-        <img
-          src="images/merch/MSB_Headband_Purple.png"
-          alt="Midnight Soulbirds Headband"
-          class="merch-image"
-        />
-      </div>
-
-      <div class="merch-info">
-        <h3>Midnight Soul Birds Headband</h3>
-
-        <p class="merch-price">$10</p>
-
-        <p class="merch-description">
-          Available in black, purple, and white.
-        </p>
-
-        <div class="merch-colors" aria-label="Available colors">
-          <span class="merch-color merch-color-black" title="Black"></span>
-          <span class="merch-color merch-color-purple" title="Purple"></span>
-          <span class="merch-color merch-color-white" title="White"></span>
+      <a class="merch-card-link" href="shop.html#psychedelic-tee">
+        <div class="merch-image-wrap">
+          <img
+            src="images/merch/MSB_Edor_Shirt.jpg"
+            alt="Midnight Soulbirds Psychedelic T-shirt"
+            class="merch-image"
+          />
         </div>
 
-        <a class="merch-button" href="#">
-          Shop Headband
-        </a>
-      </div>
+        <div class="merch-info">
+          <h3>Psychedelic Tee</h3>
+          <p class="merch-price">$30</p>
+          <p class="merch-description">
+            Midnight Soulbirds psychedelic Soulbird tee.
+          </p>
+
+          <span class="merch-button">Shop Tee</span>
+        </div>
+      </a>
     </article>
 
+    <article class="merch-card">
+      <a class="merch-card-link" href="shop.html#moon-tee">
+        <div class="merch-image-wrap">
+          <img
+            src="images/merch/MSB_Moon_Shirt.png"
+            alt="Midnight Soulbirds Moon T-shirt"
+            class="merch-image"
+          />
+        </div>
+
+        <div class="merch-info">
+          <h3>Moon Tee</h3>
+          <p class="merch-price">$30</p>
+          <p class="merch-description">
+            Midnight Soulbirds moon logo tee.
+          </p>
+
+          <span class="merch-button">Shop Tee</span>
+        </div>
+      </a>
+    </article>
+
+   <article class="merch-card">
+      <a class="merch-card-link" href="shop.html#headband">
+        <div class="merch-image-wrap merch-headband-image">
+          <img
+            src="images/merch/MSB_Headband_Purple.png"
+            alt="Midnight Soul Birds Headband in purple"
+            class="merch-image"
+          />
+        </div>
+
+        <div class="merch-info">
+          <h3>Midnight Soul Birds Headband</h3>
+          <p class="merch-price">$10</p>
+          <p class="merch-description">
+            Available in purple, black, and white.
+          </p>
+
+          <div class="merch-colors" aria-label="Available colors">
+            <span class="merch-color merch-color-purple" title="Purple"></span>
+            <span class="merch-color merch-color-black" title="Black"></span>
+            <span class="merch-color merch-color-white" title="White"></span>
+          </div>
+
+          <span class="merch-button">Shop Headband</span>
+        </div>
+      </a>
+    </article>
   </div>
 
   <div class="merch-shop-all">
-    <a class="merch-shop-all-button" href="#">
-      Shop All Merch
-    </a>
+    <a class="merch-shop-all-button" href="shop.html">Shop All Merch</a>
   </div>
 </section>
 

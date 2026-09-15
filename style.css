@@ -531,6 +531,27 @@ iframe {
   overflow: hidden;
 }
 
+.merch-card-link {
+  display: block;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+.merch-card-link:visited {
+  color: inherit;
+}
+
+.merch-card {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.merch-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
 .merch-image-wrap {
   width: 100%;
   aspect-ratio: 1 / 1;
@@ -729,5 +750,949 @@ footer {
   #tour-dates-list li {
     flex-direction: column;
     align-items: flex-start;
+  }
+}
+
+/* ============================= */
+/* SHOP PAGE + CART              */
+/* ============================= */
+
+.shop-page {
+  min-height: 100%;
+}
+
+
+/* ============================= */
+/* SHOP HEADER                   */
+/* ============================= */
+
+.shop-header {
+  padding: 4rem 1.5rem 3rem;
+
+  text-align: center;
+
+  background: #050505;
+}
+
+
+.shop-header h1 {
+  margin: 1rem 0 0.5rem;
+
+  color: #fff;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size:
+    clamp(
+      3rem,
+      8vw,
+      6rem
+    );
+
+  font-weight: 400;
+}
+
+
+.shop-header p {
+  margin: 0;
+
+  color: #aaa;
+
+  font-size: 1.1rem;
+}
+
+
+.shop-home-link {
+  display: inline-block;
+
+  color: #66caff;
+
+  text-decoration: none;
+
+  font-weight: bold;
+}
+
+
+.shop-home-link:hover {
+  text-decoration: underline;
+}
+
+
+/* ============================= */
+/* SHOP NAVIGATION               */
+/* ============================= */
+
+.shop-nav {
+  position: sticky;
+
+  top: 0;
+
+  z-index: 50;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  gap: 0.5rem;
+}
+
+
+.shop-nav a {
+  margin:
+    0.4rem
+    0.6rem;
+}
+
+
+.cart-nav-button {
+  margin-left: 0.5rem;
+
+  padding:
+    0.5rem
+    1rem;
+
+  border:
+    1px solid
+    #66caff;
+
+  border-radius: 999px;
+
+  background: transparent;
+
+  color: #66caff;
+
+  font: inherit;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+
+.cart-nav-button:hover {
+  background: #66caff;
+
+  color: #000;
+}
+
+
+/* ============================= */
+/* SHOP LAYOUT                   */
+/* ============================= */
+
+.shop-section {
+  max-width: 1200px;
+
+  padding-top: 4rem;
+}
+
+
+.shop-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
+
+  gap: 2.5rem;
+
+  align-items: start;
+}
+
+
+.shop-product {
+  scroll-margin-top: 6rem;
+}
+
+
+/* ============================= */
+/* SHOP PRODUCT IMAGES           */
+/* ============================= */
+
+.shop-product .merch-image-wrap {
+  width: 100%;
+  height: 420px;
+
+  padding: 1.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fff;
+  overflow: hidden;
+}
+
+.shop-product .merch-image {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+/* Headband can use the same stage height,
+   so all product cards stay visually aligned. */
+.shop-product .merch-headband-image {
+  height: 420px;
+}
+
+@media (max-width: 600px) {
+  .shop-product .merch-image-wrap,
+  .shop-product .merch-headband-image {
+    height: 320px;
+    padding: 1rem;
+  }
+}
+
+
+/* ============================= */
+/* PRODUCT OPTIONS               */
+/* ============================= */
+
+.product-options {
+  margin:
+    1.4rem
+    0
+    1.5rem;
+
+  text-align: left;
+}
+
+
+.product-option-title {
+  display: block;
+
+  margin-bottom: 0.65rem;
+
+  color: #bbb;
+
+  font-size: 0.82rem;
+
+  font-weight: bold;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.1em;
+}
+
+
+.option-buttons {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 0.6rem;
+}
+
+
+.option-button {
+  min-width: 48px;
+
+  min-height: 42px;
+
+  padding:
+    0.55rem
+    0.85rem;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.25
+    );
+
+  border-radius: 7px;
+
+  background: #111;
+
+  color: #eee;
+
+  font: inherit;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+
+.option-button:hover {
+  border-color: #66caff;
+}
+
+
+.option-button:focus-visible {
+  outline:
+    2px solid
+    #66caff;
+
+  outline-offset: 2px;
+}
+
+
+.option-button.selected {
+  background: #66caff;
+  border-color: #66caff;
+  color: #000;
+
+  box-shadow:
+    0 0 0 2px rgba(102, 202, 255, 0.2),
+    0 0 14px rgba(102, 202, 255, 0.28);
+}
+
+.option-button.selected:hover {
+  background: #66caff;
+  border-color: #66caff;
+  color: #000;
+}
+
+
+/* ============================= */
+/* COLOR OPTIONS                 */
+/* ============================= */
+
+.color-option {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 0.5rem;
+}
+
+
+.color-dot {
+  width: 15px;
+
+  height: 15px;
+
+  flex: 0 0 auto;
+
+  border-radius: 50%;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.55
+    );
+}
+
+
+.color-dot-purple {
+  background: #8a159f;
+}
+
+
+.color-dot-black {
+  background: #111;
+
+  border-color: #777;
+}
+
+
+.color-dot-white {
+  background: #fff;
+
+  border-color: #aaa;
+}
+
+
+.option-button.selected
+.color-dot {
+  border-color:
+    rgba(
+      0,
+      0,
+      0,
+      0.45
+    );
+}
+
+
+/* ============================= */
+/* PRODUCT QUANTITY              */
+/* ============================= */
+
+.product-quantity {
+  margin-bottom: 1.5rem;
+
+  text-align: left;
+}
+
+
+.product-quantity-controls {
+  display: inline-flex;
+
+  align-items: center;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.25
+    );
+
+  border-radius: 8px;
+
+  background: #111;
+}
+
+
+.product-quantity-button {
+  width: 42px;
+
+  height: 42px;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #fff;
+
+  font-size: 1.25rem;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+
+.product-quantity-button:hover {
+  background: #66caff;
+
+  color: #000;
+}
+
+
+.product-quantity-button:focus-visible {
+  outline:
+    2px solid
+    #66caff;
+
+  outline-offset: -2px;
+}
+
+
+.product-quantity-value {
+  display: inline-flex;
+
+  width: 46px;
+
+  height: 42px;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-left:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.15
+    );
+
+  border-right:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.15
+    );
+
+  color: #fff;
+
+  font-weight: bold;
+}
+
+
+/* ============================= */
+/* ADD TO CART                   */
+/* ============================= */
+
+button.merch-button {
+  width: 100%;
+
+  margin-top: auto;
+
+  padding:
+    0.9rem
+    1.5rem;
+
+  border: 0;
+
+  border-radius: 999px;
+
+  font-size: 1rem;
+
+  cursor: pointer;
+}
+
+
+button.merch-button:hover {
+  background: #66caff;
+
+  color: #000;
+}
+
+
+/* ============================= */
+/* CART BACKDROP                 */
+/* ============================= */
+
+.cart-backdrop {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 999;
+
+  background:
+    rgba(
+      0,
+      0,
+      0,
+      0.68
+    );
+}
+
+
+/* ============================= */
+/* CART DRAWER                   */
+/* ============================= */
+
+.cart-drawer {
+  position: fixed;
+
+  top: 0;
+
+  right: 0;
+
+  z-index: 1000;
+
+  width:
+    min(
+      420px,
+      100%
+    );
+
+  height: 100%;
+
+  padding: 1.25rem;
+
+  display: flex;
+
+  flex-direction: column;
+
+  background: #080808;
+
+  border-left:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.16
+    );
+
+  transform:
+    translateX(100%);
+
+  transition:
+    transform
+    0.25s ease;
+}
+
+
+.cart-drawer.open {
+  transform:
+    translateX(0);
+}
+
+
+body.cart-open {
+  overflow: hidden;
+}
+
+
+/* ============================= */
+/* CART HEADER                   */
+/* ============================= */
+
+.cart-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content:
+    space-between;
+
+  padding-bottom: 1rem;
+
+  border-bottom:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.14
+    );
+}
+
+
+.cart-header h2 {
+  margin: 0;
+
+  font-size: 2rem;
+
+  text-align: left;
+}
+
+
+.cart-close-button {
+  width: 44px;
+
+  height: 44px;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #fff;
+
+  font-size: 2rem;
+
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+
+.cart-close-button:hover {
+  color: #66caff;
+}
+
+
+/* ============================= */
+/* CART ITEMS                    */
+/* ============================= */
+
+.cart-items {
+  flex: 1;
+
+  overflow-y: auto;
+}
+
+
+.cart-empty {
+  margin: 2rem 0;
+
+  color: #aaa;
+
+  text-align: center;
+}
+
+
+.cart-item {
+  padding:
+    1.25rem
+    0;
+
+  border-bottom:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.1
+    );
+}
+
+
+.cart-item-top {
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  gap: 1rem;
+}
+
+
+.cart-item-name {
+  font-weight: bold;
+
+  color: #fff;
+}
+
+
+.cart-item-variation {
+  margin-top: 0.25rem;
+
+  color: #aaa;
+
+  font-size: 0.9rem;
+}
+
+
+.cart-item-controls {
+  display: flex;
+
+  align-items: center;
+
+  justify-content:
+    space-between;
+
+  gap: 1rem;
+
+  margin-top: 0.9rem;
+}
+
+
+.cart-qty-controls {
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.6rem;
+}
+
+
+.cart-qty-button,
+.cart-remove-button {
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.25
+    );
+
+  border-radius: 7px;
+
+  background: #111;
+
+  color: #fff;
+
+  cursor: pointer;
+}
+
+
+.cart-qty-button {
+  width: 36px;
+
+  height: 36px;
+
+  font-size: 1.1rem;
+}
+
+
+.cart-qty-button:hover {
+  border-color: #66caff;
+
+  color: #66caff;
+}
+
+
+.cart-remove-button {
+  padding:
+    0.5rem
+    0.75rem;
+}
+
+
+.cart-remove-button:hover {
+  border-color: #66caff;
+
+  color: #66caff;
+}
+
+
+/* ============================= */
+/* CART FOOTER                   */
+/* ============================= */
+
+.cart-footer {
+  padding-top: 1rem;
+
+  border-top:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.14
+    );
+}
+
+
+.cart-subtotal {
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  margin-bottom: 1rem;
+
+  font-size: 1.2rem;
+}
+
+
+.cart-checkout-button {
+  width: 100%;
+
+  padding:
+    0.9rem
+    1rem;
+
+  border: 0;
+
+  border-radius: 999px;
+
+  background: #444;
+
+  color: #aaa;
+
+  font-size: 1rem;
+
+  font-weight: bold;
+
+  cursor: not-allowed;
+}
+
+
+/* ============================= */
+/* SHOP RESPONSIVE               */
+/* ============================= */
+
+@media (max-width: 900px) {
+
+  .shop-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .shop-product {
+    max-width: 650px;
+
+    width: 100%;
+
+    margin:
+      0
+      auto;
+  }
+}
+
+
+@media (max-width: 600px) {
+
+  .shop-header {
+    padding:
+      3rem
+      1.25rem
+      2rem;
+  }
+
+
+  .shop-nav {
+    padding:
+      0.65rem
+      0.5rem;
+  }
+
+
+  .shop-nav a {
+    margin:
+      0.35rem
+      0.4rem;
+  }
+
+
+  .cart-nav-button {
+    margin:
+      0.35rem
+      0.4rem;
+  }
+
+
+  .shop-section {
+    padding:
+      2.5rem
+      1rem;
+  }
+
+
+  .shop-grid {
+    gap: 2rem;
+  }
+
+
+  .shop-product
+  .merch-image-wrap {
+    min-height: 280px;
+
+    max-height: 420px;
+
+    padding: 1rem;
+  }
+
+
+  .shop-product
+  .merch-image {
+    max-height: 380px;
+  }
+
+
+  .shop-product
+  .merch-headband-image {
+    min-height: 240px;
+  }
+
+
+  .shop-product
+  .merch-info {
+    padding: 1.4rem;
+  }
+
+
+  .option-button {
+    min-height: 44px;
+  }
+
+
+  .cart-drawer {
+    width: 100%;
   }
 }
