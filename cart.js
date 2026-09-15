@@ -4,6 +4,11 @@
 
   let cart = loadCart();
 
+  const INVENTORY_URL =
+    'https://midnight-soulbirds-store.kssummer.workers.dev/inventory';
+
+  let inventory = {};
+
 
   /* =========================
      ELEMENTS
@@ -33,6 +38,9 @@
   const subtotalElement =
     document.getElementById('cart-subtotal');
 
+  const checkoutButton =
+    document.getElementById('cart-checkout-button');
+
 
   if (
     !openButton ||
@@ -42,7 +50,8 @@
     !cartItems ||
     !emptyMessage ||
     !countElement ||
-    !subtotalElement
+    !subtotalElement ||
+    !checkoutButton
   ) {
     return;
   }
@@ -101,14 +110,378 @@
   }
 
 
-  function cartKey(
-    productId,
-    variation
-  ) {
+  function cartKey(item) {
+    return item.variationId;
+  }
 
-    return (
-      `${productId}::${variation}`
+
+  /* =========================
+     INVENTORY
+     ========================= */
+
+  function getStock(variationId) {
+
+    const quantity =
+      inventory[variationId];
+
+    return Number.isFinite(quantity)
+      ? quantity
+      : null;
+  }
+
+
+  function quantityInCart(variationId) {
+
+    const item =
+      cart.find(
+        entry =>
+          entry.variationId === variationId
+      );
+
+    return item
+      ? item.quantity
+      : 0;
+  }
+
+
+  function remainingStock(variationId) {
+
+    const stock =
+      getStock(variationId);
+
+    if (stock === null) {
+      return null;
+    }
+
+    return Math.max(
+      0,
+      stock - quantityInCart(variationId)
     );
+  }
+
+
+  function updateInventoryUI() {
+
+    document
+      .querySelectorAll(
+        '.shop-product'
+      )
+      .forEach(
+        card => {
+
+          const buttons =
+            [
+              ...card.querySelectorAll(
+                '.option-button'
+              )
+            ];
+
+          const addButton =
+            card.querySelector(
+              '.add-to-cart'
+            );
+
+          const quantityDisplay =
+            card.querySelector(
+              '.product-quantity-value'
+            );
+
+
+          /*
+           * Update variation buttons.
+           */
+
+          buttons.forEach(
+            button => {
+
+              const variationId =
+                button.dataset.variationId;
+
+              const stock =
+                getStock(
+                  variationId
+                );
+
+
+              /*
+               * Remember the original label.
+               */
+
+              if (
+                !button.dataset.originalText
+              ) {
+                button.dataset.originalText =
+                  button.textContent.trim();
+              }
+
+
+              /*
+               * Explicit stock of zero means
+               * this variation is sold out.
+               */
+
+              if (stock === 0) {
+
+                button.disabled =
+                  true;
+
+                button.classList.add(
+                  'sold-out'
+                );
+
+                button.classList.remove(
+                  'selected'
+                );
+
+                button.textContent =
+                  `${button.dataset.originalText} — Sold Out`;
+
+              } else {
+
+                button.disabled =
+                  false;
+
+                button.classList.remove(
+                  'sold-out'
+                );
+
+                button.textContent =
+                  button.dataset.originalText;
+              }
+            }
+          );
+
+
+          /*
+           * Find the selected available
+           * variation.
+           */
+
+          let selected =
+            card.querySelector(
+              '.option-button.selected:not(:disabled)'
+            );
+
+
+          /*
+           * If the selected variation is
+           * sold out, select the first
+           * available variation instead.
+           */
+
+          if (!selected) {
+
+            selected =
+              buttons.find(
+                button =>
+                  !button.disabled
+              );
+
+            if (selected) {
+
+              selected.classList.add(
+                'selected'
+              );
+
+
+              /*
+               * Keep the headband image in
+               * sync with its selected color.
+               */
+
+              if (
+                card.dataset.productId ===
+                  'headband'
+              ) {
+
+                updateHeadbandImage(
+                  selected.dataset.value
+                );
+              }
+            }
+          }
+
+
+          /*
+           * No available variations means
+           * the entire product is sold out.
+           */
+
+          if (!selected) {
+
+            if (addButton) {
+
+              addButton.disabled =
+                true;
+
+              addButton.textContent =
+                'Sold Out';
+            }
+
+            return;
+          }
+
+
+          if (addButton) {
+
+            addButton.disabled =
+              false;
+
+            addButton.textContent =
+              'Add to Cart';
+          }
+
+
+          /*
+           * Clamp the product quantity
+           * selector to remaining stock.
+           */
+
+          if (quantityDisplay) {
+
+            const remaining =
+              remainingStock(
+                selected.dataset.variationId
+              );
+
+            if (remaining !== null) {
+
+              const current =
+                Number.parseInt(
+                  quantityDisplay.textContent,
+                  10
+                ) || 1;
+
+              quantityDisplay.textContent =
+                Math.max(
+                  1,
+                  Math.min(
+                    current,
+                    Math.max(
+                      remaining,
+                      1
+                    )
+                  )
+                );
+            }
+          }
+        }
+      );
+  }
+
+
+  async function loadInventory() {
+
+    try {
+
+      const response =
+        await fetch(
+          INVENTORY_URL
+        );
+
+      const data =
+        await response.json();
+
+
+      if (
+        !response.ok ||
+        !data.inventory
+      ) {
+
+        throw new Error(
+          data.error ||
+          'Unable to retrieve inventory.'
+        );
+      }
+
+
+      inventory =
+        data.inventory;
+
+
+      /*
+       * Reconcile the existing cart with
+       * the latest Square inventory.
+       */
+
+      let cartChanged =
+        false;
+
+
+      cart =
+        cart.filter(
+          item => {
+
+            const stock =
+              getStock(
+                item.variationId
+              );
+
+
+            /*
+             * Unknown inventory is left
+             * untouched.
+             */
+
+            if (stock === null) {
+              return true;
+            }
+
+
+            /*
+             * Remove variations that have
+             * completely sold out.
+             */
+
+            if (stock <= 0) {
+
+              cartChanged =
+                true;
+
+              return false;
+            }
+
+
+            /*
+             * Reduce quantity if inventory
+             * dropped below what's currently
+             * in the cart.
+             */
+
+            if (
+              item.quantity >
+              stock
+            ) {
+
+              item.quantity =
+                stock;
+
+              cartChanged =
+                true;
+            }
+
+
+            return true;
+          }
+        );
+
+
+      if (cartChanged) {
+        saveCart();
+      }
+
+
+      updateInventoryUI();
+
+      renderCart();
+
+    } catch (error) {
+
+      console.error(
+        'Inventory failed:',
+        error
+      );
+    }
   }
 
 
@@ -119,27 +492,30 @@
   function addToCart(product) {
 
     const key =
-      cartKey(
-        product.productId,
-        product.variation
-      );
-
+      cartKey(product);
 
     const existing =
       cart.find(
         item =>
-          cartKey(
-            item.productId,
-            item.variation
-          ) === key
+          cartKey(item) === key
       );
 
 
     if (existing) {
 
+      const stock =
+        getStock(
+          product.variationId
+        );
+
+      const maximum =
+        stock === null
+          ? 99
+          : stock;
+
       existing.quantity =
         Math.min(
-          99,
+          maximum,
           existing.quantity +
             product.quantity
         );
@@ -154,6 +530,8 @@
 
     renderCart();
 
+    updateInventoryUI();
+
     openCart();
   }
 
@@ -166,10 +544,7 @@
     const item =
       cart.find(
         entry =>
-          cartKey(
-            entry.productId,
-            entry.variation
-          ) === key
+          cartKey(entry) === key
       );
 
 
@@ -178,7 +553,8 @@
     }
 
 
-    item.quantity += delta;
+    item.quantity +=
+      delta;
 
 
     if (item.quantity <= 0) {
@@ -186,17 +562,24 @@
       cart =
         cart.filter(
           entry =>
-            cartKey(
-              entry.productId,
-              entry.variation
-            ) !== key
+            cartKey(entry) !== key
         );
 
     } else {
 
+      const stock =
+        getStock(
+          item.variationId
+        );
+
+      const maximum =
+        stock === null
+          ? 99
+          : stock;
+
       item.quantity =
         Math.min(
-          99,
+          maximum,
           item.quantity
         );
     }
@@ -205,6 +588,8 @@
     saveCart();
 
     renderCart();
+
+    updateInventoryUI();
   }
 
 
@@ -213,16 +598,14 @@
     cart =
       cart.filter(
         entry =>
-          cartKey(
-            entry.productId,
-            entry.variation
-          ) !== key
+          cartKey(entry) !== key
       );
-
 
     saveCart();
 
     renderCart();
+
+    updateInventoryUI();
   }
 
 
@@ -265,14 +648,15 @@
       cart.length !== 0;
 
 
+    checkoutButton.disabled =
+      cart.length === 0;
+
+
     cart.forEach(
       item => {
 
         const key =
-          cartKey(
-            item.productId,
-            item.variation
-          );
+          cartKey(item);
 
 
         const row =
@@ -430,6 +814,26 @@
           `Increase ${item.name} quantity`
         );
 
+
+        /*
+         * Disable the cart + button when
+         * we've reached known stock.
+         */
+
+        const stock =
+          getStock(
+            item.variationId
+          );
+
+        if (
+          stock !== null &&
+          item.quantity >= stock
+        ) {
+          plus.disabled =
+            true;
+        }
+
+
         plus.addEventListener(
           'click',
           () =>
@@ -562,6 +966,18 @@
               'click',
               () => {
 
+                /*
+                 * Disabled sold-out buttons
+                 * shouldn't normally generate
+                 * clicks, but protect against
+                 * it anyway.
+                 */
+
+                if (button.disabled) {
+                  return;
+                }
+
+
                 buttons.forEach(
                   other =>
                     other.classList.remove(
@@ -582,9 +998,8 @@
 
 
                 /*
-                 * Change the headband
-                 * image with the selected
-                 * color.
+                 * Change the headband image
+                 * with the selected color.
                  */
 
                 if (
@@ -597,6 +1012,9 @@
                     button.dataset.value
                   );
                 }
+
+
+                updateInventoryUI();
               }
             );
           }
@@ -669,6 +1087,23 @@
           'click',
           () => {
 
+            const selectedOption =
+              card.querySelector(
+                '.option-button.selected'
+              );
+
+
+            if (!selectedOption) {
+              return;
+            }
+
+
+            const remaining =
+              remainingStock(
+                selectedOption.dataset.variationId
+              );
+
+
             let quantity =
               Number.parseInt(
                 quantityDisplay.textContent,
@@ -676,9 +1111,18 @@
               ) || 1;
 
 
+            const maximum =
+              remaining === null
+                ? 99
+                : Math.max(
+                    1,
+                    remaining
+                  );
+
+
             quantity =
               Math.min(
-                99,
+                maximum,
                 quantity + 1
               );
 
@@ -736,6 +1180,20 @@
             }
 
 
+            const variationId =
+              selectedOption.dataset.variationId;
+
+
+            if (!variationId) {
+
+              console.error(
+                'Selected product variation is missing its Square variation ID.'
+              );
+
+              return;
+            }
+
+
             const quantity =
               Math.max(
                 1,
@@ -747,6 +1205,42 @@
                   ) || 1
                 )
               );
+
+
+            const remaining =
+              remainingStock(
+                variationId
+              );
+
+
+            /*
+             * Known zero remaining stock means
+             * the item cannot be added.
+             */
+
+            if (
+              remaining !== null &&
+              remaining <= 0
+            ) {
+
+              updateInventoryUI();
+
+              return;
+            }
+
+
+            /*
+             * Don't add more than the
+             * remaining inventory.
+             */
+
+            const quantityToAdd =
+              remaining === null
+                ? quantity
+                : Math.min(
+                    quantity,
+                    remaining
+                  );
 
 
             addToCart({
@@ -766,7 +1260,11 @@
               variation:
                 selectedOption.dataset.value,
 
-              quantity
+              variationId:
+                variationId,
+
+              quantity:
+                quantityToAdd
             });
 
 
@@ -777,6 +1275,8 @@
 
             quantityDisplay.textContent =
               '1';
+
+            updateInventoryUI();
           }
         );
       }
@@ -830,6 +1330,135 @@
 
 
   /* =========================
+     CHECKOUT
+     ========================= */
+
+  const CHECKOUT_URL =
+    'https://midnight-soulbirds-store.kssummer.workers.dev/checkout';
+
+
+  async function checkout() {
+
+    if (
+      cart.length === 0 ||
+      checkoutButton.getAttribute(
+        'aria-busy'
+      ) === 'true'
+    ) {
+      return;
+    }
+
+
+    const originalText =
+      checkoutButton.textContent;
+
+
+    checkoutButton.textContent =
+      'Opening Checkout…';
+
+    checkoutButton.setAttribute(
+      'aria-busy',
+      'true'
+    );
+
+
+    try {
+
+      const response =
+        await fetch(
+          CHECKOUT_URL,
+          {
+            method: 'POST',
+
+            headers: {
+              'Content-Type':
+                'application/json'
+            },
+
+            body: JSON.stringify({
+              items: cart.map(
+                item => ({
+                  variationId:
+                    item.variationId,
+
+                  quantity:
+                    item.quantity
+                })
+              )
+            })
+          }
+        );
+
+
+      const data =
+        await response.json();
+
+
+      /*
+       * Inventory may have changed since
+       * the customer loaded the shop.
+       */
+
+      if (response.status === 409) {
+
+        checkoutButton.removeAttribute(
+          'aria-busy'
+        );
+
+        checkoutButton.textContent =
+          originalText;
+
+        await loadInventory();
+
+        alert(
+          'Some items in your cart are no longer available in the requested quantity. Inventory has been updated. Please review your cart.'
+        );
+
+        return;
+      }
+
+
+      if (
+        !response.ok ||
+        !data.url
+      ) {
+
+        throw new Error(
+          data.error ||
+          'Unable to create checkout.'
+        );
+      }
+
+
+      window.location.href =
+        data.url;
+
+
+    } catch (error) {
+
+      console.error(
+        'Checkout failed:',
+        error
+      );
+
+
+      checkoutButton.removeAttribute(
+        'aria-busy'
+      );
+
+
+      checkoutButton.textContent =
+        originalText;
+
+
+      alert(
+        'Unable to start checkout. Please try again.'
+      );
+    }
+  }
+
+
+  /* =========================
      EVENTS
      ========================= */
 
@@ -862,9 +1491,16 @@
           'open'
         )
       ) {
+
         closeCart();
       }
     }
+  );
+
+
+  checkoutButton.addEventListener(
+    'click',
+    checkout
   );
 
 
@@ -872,6 +1508,26 @@
      INITIALIZE
      ========================= */
 
+  window.addEventListener(
+    'pageshow',
+    () => {
+
+      checkoutButton.removeAttribute(
+        'aria-busy'
+      );
+
+      checkoutButton.textContent =
+        'Checkout';
+
+      renderCart();
+
+      loadInventory();
+    }
+  );
+
+
   renderCart();
+
+  loadInventory();
 
 })();

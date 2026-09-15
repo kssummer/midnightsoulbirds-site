@@ -1066,6 +1066,24 @@ footer {
   color: #000;
 }
 
+.option-button.sold-out,
+.option-button.sold-out:hover {
+  background: #181818;
+  border-color: #444;
+  color: #777;
+  cursor: not-allowed;
+  opacity: 0.65;
+  transform: none;
+  box-shadow: none;
+}
+
+button.merch-button:disabled {
+  background: #444;
+  color: #aaa;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
 
 /* ============================= */
 /* COLOR OPTIONS                 */
@@ -1571,24 +1589,27 @@ body.cart-open {
 
 .cart-checkout-button {
   width: 100%;
-
   padding:
     0.9rem
     1rem;
-
   border: 0;
-
   border-radius: 999px;
-
-  background: #444;
-
-  color: #aaa;
-
+  background: #66caff;
+  color: #000;
   font-size: 1rem;
-
   font-weight: bold;
+  cursor: pointer;
+}
 
+.cart-checkout-button:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.cart-checkout-button:disabled {
+  background: #444;
+  color: #aaa;
   cursor: not-allowed;
+  opacity: 0.7;
 }
 
 
